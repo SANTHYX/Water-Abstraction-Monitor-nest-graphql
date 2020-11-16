@@ -6,7 +6,7 @@
 [travis-url]: https://travis-ci.org/nestjs/nest
 [linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
 [linux-url]: https://travis-ci.org/nestjs/nest
-  
+
   <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
@@ -47,6 +47,21 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Set Global .env File
+
+```bash
+#example .env file
+DB_HOST=localhost
+DB_port=5432
+DB_USERNAME=postgres
+DB_PASSWORD=postges
+DB_DATABASE=myMigration
+DB_ENTITIES=./dist/models/*.js
+DB_MIGRATIONS=./dist/migration/*.js
+DB_ENTITIES_DIR=./src/models
+DB_MIGRATIONS_DIR=./src/migration
+```
+
 ## Test
 
 ```bash
@@ -58,6 +73,36 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## Migration
+
+At first you need to bulid project in development (recommended). Migration require some global configuration in .json file.
+Otherwise TypeORM will throw a exception about lack of any configuration (ormconfig.dev.ts is a local setup belongs only to Nest)
+
+```bash
+# example ormconfig.json
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "FirstMigration",
+  "entities": ["./dist/models/*.js"],
+  "migrations": ["./dist/migration/*.js"],
+  "cli": {
+    "entitiesDir": "./src/models",
+    "migrationsDir": "./src/migration"
+  }
+}
+```
+
+Then you can run your migration
+
+```bash
+# run migration
+typeorm migration:run
 ```
 
 ## Support
@@ -72,4 +117,8 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## License
 
-  Nest is [MIT licensed](LICENSE).
+Nest is [MIT licensed](LICENSE).
+
+```
+
+```
