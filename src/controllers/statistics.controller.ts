@@ -8,12 +8,16 @@ export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}
 
   @Post()
-  async GenerateStatistics(@Body() statistics: CreateStatisticsDTO) {
+  async GenerateStatistics(
+    @Body() statistics: CreateStatisticsDTO,
+  ): Promise<void> {
     await this.statisticsService.GenerateStatistics(statistics);
   }
 
   @Patch()
-  async UpdateStatistics(@Body() statistics: UpdateStatisticsDTO) {
+  async UpdateStatistics(
+    @Body() statistics: UpdateStatisticsDTO,
+  ): Promise<void> {
     await this.statisticsService.UpdateStatistics(statistics);
   }
 }

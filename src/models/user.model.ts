@@ -1,62 +1,55 @@
 import { Exclude } from 'class-transformer';
-import { IsDate, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Statistics } from './statistics.model';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  private id: number;
+  @Exclude()
+  id: string;
 
   @Column({ type: 'varchar', length: 30 })
   @IsString()
   @IsNotEmpty()
-  private login: string;
+  login: string;
 
   @Column({ type: 'varchar', length: 30 })
   @IsString()
   @IsNotEmpty()
   @Exclude()
-  private password: string;
+  password: string;
 
   @Column({ type: 'varchar', length: 25 })
   @IsEmail()
   @IsNotEmpty()
-  private email: string;
+  email: string;
 
   @Column('varchar')
   @IsString()
   @IsNotEmpty()
-  private nationality: string;
+  @Length(2, 3)
+  nationality: string;
 
-  @Column('date')
+  @CreateDateColumn()
   @IsDate()
-  private createdAt: Date;
+  createdAt: Date;
 
-  @Column('date')
+  @UpdateDateColumn()
   @IsDate()
-  private updatedAt: Date;
+  updatedAt: Date;
 
-  @OneToOne(() => Statistics)
+  @OneToOne(() => Statistics, {
+    cascade: true,
+  })
   @JoinColumn()
-  private statistics: Statistics;
-
-  constructor(
-    login: string,
-    password: string,
-    email: string,
-    nationality: string,
-  ) {
-    this.login = login;
-    this.password = password;
-    this.email = email;
-    this.nationality = nationality;
-    this.createdAt = this.updatedAt = new Date();
-  }
+  statistics: Statistics;
 }

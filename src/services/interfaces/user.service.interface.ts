@@ -7,7 +7,7 @@ import { User } from 'src/models/user.model';
 export interface IUserService {
   FindUserAsync(login: string): Promise<User>;
   BrowseAsync(pagination: PaginationDTO): Promise<User[]>;
-  RegisterAsync(userDTO: CreateUserDTO): Promise<void>;
-  UpdateAsync(userDTO: UpdateUserDTO): Promise<void>;
-  DeleteAsync(userDTO: DeleteUserDTO): Promise<void>;
+  RegisterAsync(user: CreateUserDTO): Promise<void>;
+  UpdateAsync(user: UpdateUserDTO): Promise<void>;
+  DeleteAsync(user: DeleteUserDTO): Promise<void>;
 }

@@ -1,32 +1,29 @@
+import { Exclude } from 'class-transformer';
 import { IsDate, IsNotEmpty, IsNumber } from 'class-validator';
 import {
   Column,
+  CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
 export class Statistics {
   @PrimaryGeneratedColumn('uuid')
-  private id: number;
+  @Exclude()
+  id: string;
 
   @Column('float')
   @IsNumber()
   @IsNotEmpty()
-  private actuallAverageSubtraction: number;
+  avgSubtraction: number;
 
-  @Column('date')
+  @CreateDateColumn()
   @IsDate()
-  private createdAt: Date;
+  createdAt: Date;
 
-  @Column('date')
+  @UpdateDateColumn()
   @IsDate()
-  private updatedAt: Date;
-
-  constructor(actuallAverageSubtraction: number) {
-    this.actuallAverageSubtraction = actuallAverageSubtraction;
-    this.createdAt = this.updatedAt = new Date();
-  }
+  updatedAt: Date;
 }

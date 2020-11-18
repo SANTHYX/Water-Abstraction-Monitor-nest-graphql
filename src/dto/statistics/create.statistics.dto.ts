@@ -1,3 +1,3 @@
 export class CreateStatisticsDTO {
-  actuallAverageSubtraction: number;
+  avgSubtraction: number;
 }
