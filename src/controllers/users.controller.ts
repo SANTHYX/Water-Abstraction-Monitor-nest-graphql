@@ -14,7 +14,7 @@ import { PaginationDTO } from 'src/dto/pagination/pagination.dto';
 import { CreateUserDTO } from 'src/dto/users/create.user.dto';
 import { DeleteUserDTO } from 'src/dto/users/delete.user.dto';
 import { UpdateUserDTO } from 'src/dto/users/update.user.dto';
-import { User } from 'src/models/user.model';
+import { User } from 'src/models/entities/user.model';
 import { UsersService } from 'src/services/users.service';
 
 @Controller('users')
