@@ -1,6 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
@@ -14,10 +15,12 @@ export class Subtraction {
   @Exclude()
   id: string;
 
+  @Column('varchar')
   @IsString()
   @IsNotEmpty()
   task: string;
 
+  @Column('varchar')
   @IsNumber()
   @IsNotEmpty()
   value: number;

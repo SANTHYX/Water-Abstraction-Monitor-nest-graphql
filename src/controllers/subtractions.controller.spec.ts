@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SubtractionsController } from './eurostat.controller';
+import { SubtractionsController } from './subtractions.controller';
 
 describe('SubtractionsController', () => {
   let controller: SubtractionsController;

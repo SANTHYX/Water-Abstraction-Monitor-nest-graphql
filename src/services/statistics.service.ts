@@ -24,6 +24,7 @@ export class StatisticsService implements IStatisticsService {
     user.statistics = newStatistic;
     await this.userRepository.save(user);
   }
+  
   UpdateStatistics(statisticsDTO: UpdateStatisticsDTO): Promise<void> {
     throw new Error('Method not implemented.');
   }

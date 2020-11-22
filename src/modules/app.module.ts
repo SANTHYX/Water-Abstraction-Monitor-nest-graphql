@@ -7,6 +7,7 @@ import { AppService } from '../services/app.service';
 import { StatisticsModule } from './statistics.module';
 import { EurostatModule } from './eurostat.module';
 import { UsersModule } from './users.module';
+import { SubtractionsModule } from './subtractions.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UsersModule } from './users.module';
     UsersModule,
     StatisticsModule,
     EurostatModule,
+    SubtractionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
