@@ -5,11 +5,14 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Statistics } from './statistics.model';
+import { Subtraction } from './subtractions.model';
 
 @Entity()
 export class User {
@@ -39,10 +42,11 @@ export class User {
   @Length(2, 3)
   nationality: string;
 
+  @Exclude()
   @CreateDateColumn()
   @IsDate()
   createdAt: Date;
-
+  @Exclude()
   @UpdateDateColumn()
   @IsDate()
   updatedAt: Date;
@@ -52,4 +56,11 @@ export class User {
   })
   @JoinColumn()
   statistics: Statistics;
+
+  @OneToMany(
+    () => Subtraction,
+    subtraction => subtraction.user,
+  )
+  @JoinTable()
+  subtractions: Subtraction[];
 }

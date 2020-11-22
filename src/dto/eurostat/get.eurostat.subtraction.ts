@@ -1,4 +1,4 @@
-import { IsDate } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GetEurostatSubtraction {
   year?: number;

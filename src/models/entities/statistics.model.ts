@@ -19,10 +19,12 @@ export class Statistics {
   @IsNotEmpty()
   avgSubtraction: number;
 
+  @Exclude()
   @CreateDateColumn()
   @IsDate()
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn()
   @IsDate()
   updatedAt: Date;

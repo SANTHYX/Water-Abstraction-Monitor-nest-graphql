@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationDTO } from 'src/dto/pagination/pagination.dto';
 import { CreateUserDTO } from 'src/dto/users/create.user.dto';
 import { DeleteUserDTO } from 'src/dto/users/delete.user.dto';
@@ -36,7 +35,7 @@ export class UsersService implements IUserService {
       return await this.usersRepository.find({ relations: ['statistics'] });
   }
 
-  async RegisterAsync(user: CreateUserDTO): Promise<void> {
+  async RegisterAsync(user: CreateUserDTO): Promise<void> {    
     await this.usersRepository.save(user);
   }
 

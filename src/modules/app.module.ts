@@ -5,7 +5,7 @@ import { ormConfig } from 'src/ormconfig.dev';
 import { AppController } from '../controllers/app.controller';
 import { AppService } from '../services/app.service';
 import { StatisticsModule } from './statistics.module';
-import { SubtractionsModule } from './subtractions.module';
+import { EurostatModule } from './eurostat.module';
 import { UsersModule } from './users.module';
 
 @Module({
@@ -16,7 +16,7 @@ import { UsersModule } from './users.module';
     TypeOrmModule.forRoot(ormConfig),
     UsersModule,
     StatisticsModule,
-    SubtractionsModule,
+    EurostatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
