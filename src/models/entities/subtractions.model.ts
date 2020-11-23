@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import {
   Column,
@@ -12,7 +11,6 @@ import { User } from './user.model';
 @Entity()
 export class Subtraction {
   @PrimaryGeneratedColumn('uuid')
-  @Exclude()
   id: string;
 
   @Column('varchar')

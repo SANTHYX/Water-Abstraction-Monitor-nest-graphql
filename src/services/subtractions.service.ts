@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AddSubtractionDTO } from 'src/dto/subtractions/add.subtraction.dto';
+import { DeleteSubtractionsDTO } from 'src/dto/subtractions/delete.subtraction.dto';
 import { Subtraction } from 'src/models/entities/subtractions.model';
 import { SubtractionsRepository } from 'src/repositories/subtractions.repository';
 import { UsersRepository } from 'src/repositories/users.repository';
@@ -12,16 +13,40 @@ export class SubtractionsService implements ISubtractionsService {
     private readonly userRepository: UsersRepository,
   ) {}
 
-  async AddSubtraction(subtraction: AddSubtractionDTO): Promise<void> {
-    const user = await this.userRepository.findOne({
-      login: subtraction.login,
-    });
+  async AddSubtraction(subtractionDTO: AddSubtractionDTO): Promise<void> {
+    const user = await this.userRepository.findOne(
+      {
+        login: subtractionDTO.login,
+      },
+      { relations: ['statistics'] },
+    );
     const newSubtraction = new Subtraction();
 
-    newSubtraction.task = subtraction.task;
-    newSubtraction.value = subtraction.value;
+    newSubtraction.task = subtractionDTO.task;
+    newSubtraction.value = subtractionDTO.value;
     newSubtraction.user = user;
+    user.statistics.avgSubtraction += subtractionDTO.value;
 
     await this.subtractionsRepository.save(newSubtraction);
+    await this.userRepository.save(user);
+  }
+
+  async RemoveSubtraction(
+    subtractionDTO: DeleteSubtractionsDTO,
+  ): Promise<void> {
+    const subtraction = await this.subtractionsRepository.findOne(
+      subtractionDTO.taskId,
+    );
+    const user = await this.userRepository.findOne(
+      {
+        login: subtractionDTO.login,
+      },
+      { relations: ['statistics'] },
+    );
+
+    user.statistics.avgSubtraction -= subtraction.value;
+
+    await this.userRepository.save(user);
+    await this.subtractionsRepository.remove(subtraction);
   }
 }

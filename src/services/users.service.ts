@@ -27,15 +27,15 @@ export class UsersService implements IUserService {
     const { from, to } = pagination;
     if (from || to) {
       return await this.usersRepository.find({
-        relations: ['statistics'],
+        relations: ['statistics', 'subtraction'],
         skip: from,
         take: to,
       });
     } else
-      return await this.usersRepository.find({ relations: ['statistics'] });
+      return await this.usersRepository.find({ relations: ['statistics','subtractions'] });
   }
 
-  async RegisterAsync(user: CreateUserDTO): Promise<void> {    
+  async RegisterAsync(user: CreateUserDTO): Promise<void> {
     await this.usersRepository.save(user);
   }
 

@@ -2,9 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { GetEurostatSubtraction } from 'src/dto/eurostat/get.eurostat.subtraction';
 import { EurostatResponse } from 'src/models/responses/eurostat.response.model';
 import { fetchData } from 'src/plugins/axios';
+import { IEurostatService } from './interfaces/eurostat.service.interface';
 
 @Injectable()
-export class EurostatService {
+export class EurostatService implements IEurostatService {
   async FetchCurrentEurostatData(
     getDTO: GetEurostatSubtraction,
   ): Promise<EurostatResponse> {

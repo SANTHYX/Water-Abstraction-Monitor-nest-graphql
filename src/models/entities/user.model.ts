@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  JoinTable,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -61,6 +60,6 @@ export class User {
     () => Subtraction,
     subtraction => subtraction.user,
   )
-  @JoinTable()
+  @JoinColumn()
   subtractions: Subtraction[];
 }
