@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PaginationDTO } from 'src/dto/pagination/pagination.dto';
 import { CreateUserDTO } from 'src/dto/users/create.user.dto';
 import { DeleteUserDTO } from 'src/dto/users/delete.user.dto';
@@ -32,19 +36,42 @@ export class UsersService implements IUserService {
         take: to,
       });
     } else
-      return await this.usersRepository.find({ relations: ['statistics','subtractions'] });
+      return await this.usersRepository.find({
+        relations: ['statistics', 'subtractions'],
+      });
   }
 
-  async RegisterAsync(user: CreateUserDTO): Promise<void> {
-    await this.usersRepository.save(user);
+  async RegisterAsync(userDTO: CreateUserDTO): Promise<void> {
+    if (!(await this.usersRepository.isExist(userDTO.login))) {
+      await this.usersRepository.save(userDTO);
+    } else
+      throw new ConflictException(
+        `Seems like user with username ${userDTO.login} already exist`,
+      );
   }
 
-  async UpdateAsync(user: UpdateUserDTO): Promise<void> {
-    throw new Error('Method not implemented.');
+  async UpdateAsync(userDTO: UpdateUserDTO): Promise<void> {
+    if (!(await this.usersRepository.isExist(userDTO.login))) {
+      const user = await this.usersRepository.findOne({
+        login: userDTO.recentLogin,
+      });
+      const newUser = await this.usersRepository.preload({
+        id: user.id,
+        login: userDTO.login,
+        password: userDTO.password,
+        email: userDTO.email,
+        nationality: userDTO.nationality,
+      });
+
+      await this.usersRepository.save(newUser);
+    } else
+      throw new NotFoundException(
+        `Seems like user with username ${userDTO.login} dont exist`,
+      );
   }
 
-  async DeleteAsync(user: DeleteUserDTO): Promise<void> {
-    const _user = await this.usersRepository.find({ login: user.login });
+  async DeleteAsync(userDTO: DeleteUserDTO): Promise<void> {
+    const _user = await this.usersRepository.find({ login: userDTO.login });
     await this.usersRepository.remove(_user);
   }
 }

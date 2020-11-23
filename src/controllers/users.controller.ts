@@ -28,7 +28,7 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get()
+  @Get('')
   async GetAllUsersAsync(@Query() pagination: PaginationDTO): Promise<User[]> {
     return await this.userService.BrowseAsync(pagination);
   }

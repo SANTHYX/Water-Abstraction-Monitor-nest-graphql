@@ -16,7 +16,7 @@ export class Subtraction {
   @Column('varchar')
   @IsString()
   @IsNotEmpty()
-  task: string;
+  taskName: string;
 
   @Column('varchar')
   @IsNumber()

@@ -1,5 +1,5 @@
 export class AddSubtractionDTO {
   login: string;
-  task: string;
+  taskName: string;
   value: number;
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PaginationDTO } from 'src/dto/pagination/pagination.dto';
 import { AddSubtractionDTO } from 'src/dto/subtractions/add.subtraction.dto';
 import { DeleteSubtractionsDTO } from 'src/dto/subtractions/delete.subtraction.dto';
 import { Subtraction } from 'src/models/entities/subtractions.model';
@@ -13,6 +14,25 @@ export class SubtractionsService implements ISubtractionsService {
     private readonly userRepository: UsersRepository,
   ) {}
 
+  async BrowseAllUserSubtraction(
+    pagination: PaginationDTO,
+    login: string,
+  ): Promise<Subtraction[]> {
+    const { from, to } = pagination;
+    const user = await this.userRepository.findOne({ login: login });
+
+    if (from || to) {
+      return await this.subtractionsRepository.find({
+        where: { user: user },
+        skip: from,
+        take: to,
+        order: {
+          createdAt: 'DESC',
+        },
+      });
+    } else return await this.subtractionsRepository.find();
+  }
+
   async AddSubtraction(subtractionDTO: AddSubtractionDTO): Promise<void> {
     const user = await this.userRepository.findOne(
       {
@@ -22,7 +42,7 @@ export class SubtractionsService implements ISubtractionsService {
     );
     const newSubtraction = new Subtraction();
 
-    newSubtraction.task = subtractionDTO.task;
+    newSubtraction.taskName = subtractionDTO.taskName;
     newSubtraction.value = subtractionDTO.value;
     newSubtraction.user = user;
     user.statistics.avgSubtraction += subtractionDTO.value;

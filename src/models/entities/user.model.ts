@@ -45,6 +45,7 @@ export class User {
   @CreateDateColumn()
   @IsDate()
   createdAt: Date;
+
   @Exclude()
   @UpdateDateColumn()
   @IsDate()
