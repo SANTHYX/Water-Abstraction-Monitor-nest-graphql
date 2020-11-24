@@ -1,3 +1,3 @@
 export interface IUsersRepository {
-  isExist(username: string): Promise<boolean>;
+  isExist(username: string, password?:string): Promise<boolean>;
 }

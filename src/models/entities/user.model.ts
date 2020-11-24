@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import { IsDate, IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
 import {
   Column,
@@ -16,7 +15,6 @@ import { Subtraction } from './subtractions.model';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  @Exclude()
   id: string;
 
   @Column({ type: 'varchar', length: 30 })
@@ -24,10 +22,9 @@ export class User {
   @IsNotEmpty()
   login: string;
 
-  @Column({ type: 'varchar', length: 30 })
+  @Column({ type: 'varchar' })
   @IsString()
   @IsNotEmpty()
-  @Exclude()
   password: string;
 
   @Column({ type: 'varchar', length: 25 })
@@ -41,12 +38,10 @@ export class User {
   @Length(2, 3)
   nationality: string;
 
-  @Exclude()
   @CreateDateColumn()
   @IsDate()
   createdAt: Date;
 
-  @Exclude()
   @UpdateDateColumn()
   @IsDate()
   updatedAt: Date;

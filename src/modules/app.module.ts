@@ -8,6 +8,7 @@ import { StatisticsModule } from './statistics.module';
 import { EurostatModule } from './eurostat.module';
 import { UsersModule } from './users.module';
 import { SubtractionsModule } from './subtractions.module';
+import { AuthModule } from './auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { SubtractionsModule } from './subtractions.module';
     StatisticsModule,
     EurostatModule,
     SubtractionsModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

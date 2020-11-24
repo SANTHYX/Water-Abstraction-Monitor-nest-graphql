@@ -13,18 +13,6 @@ export class StatisticsService implements IStatisticsService {
     private readonly userRepository: UsersRepository,
   ) {}
 
-  async GenerateStatistics(
-    statisticsDTO: GenerateStatisticsDTO,
-  ): Promise<void> {
-    const user = await this.userRepository.findOne({
-      login: statisticsDTO.login,
-    });
-    const newStatistic = new Statistics();
-    newStatistic.avgSubtraction = 0;
-    user.statistics = newStatistic;
-    await this.userRepository.save(user);
-  }
-
   UpdateStatistics(statisticsDTO: UpdateStatisticsDTO): Promise<void> {
     throw new Error('Method not implemented.');
   }

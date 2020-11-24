@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { hash } from 'bcrypt';
 import { PaginationDTO } from 'src/dto/pagination/pagination.dto';
 import { CreateUserDTO } from 'src/dto/users/create.user.dto';
 import { DeleteUserDTO } from 'src/dto/users/delete.user.dto';
@@ -43,7 +44,16 @@ export class UsersService implements IUserService {
 
   async RegisterAsync(userDTO: CreateUserDTO): Promise<void> {
     if (!(await this.usersRepository.isExist(userDTO.login))) {
-      await this.usersRepository.save(userDTO);
+      const user = {
+        login: userDTO.login,
+        password: await hash(userDTO.password, 12),
+        email: userDTO.email,
+        nationality: userDTO.nationality,
+        statistics: {
+          avgSubtraction: 0,
+        },
+      };
+      await this.usersRepository.save(user);
     } else
       throw new ConflictException(
         `Seems like user with username ${userDTO.login} already exist`,
@@ -58,9 +68,12 @@ export class UsersService implements IUserService {
       const newUser = await this.usersRepository.preload({
         id: user.id,
         login: userDTO.login,
-        password: userDTO.password,
+        password: await hash(userDTO.password, 12),
         email: userDTO.email,
         nationality: userDTO.nationality,
+        statistics: {
+          avgSubtraction: 0,
+        },
       });
 
       await this.usersRepository.save(newUser);
