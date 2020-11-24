@@ -1,5 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './modules/app.module';
 
 async function bootstrap() {
@@ -12,6 +13,14 @@ async function bootstrap() {
       },
     }),
   );
+  const options = new DocumentBuilder()
+    .setTitle('Water-Abstraction-API')
+    .setDescription('API for application helping with water saving')
+    .setVersion('1.0')
+    .addTag('WA')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
   await app.listen(3000);
 }
 bootstrap();

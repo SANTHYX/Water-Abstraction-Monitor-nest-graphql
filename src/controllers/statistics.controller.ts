@@ -1,5 +1,4 @@
-import { Body, Controller, Patch, Post, UseGuards } from '@nestjs/common';
-import { GenerateStatisticsDTO } from 'src/dto/statistics/generate.statistics.dto';
+import { Body, Controller, Patch, UseGuards } from '@nestjs/common';
 import { UpdateStatisticsDTO } from 'src/dto/statistics/update.statistics.dto';
 import { StatisticsService } from 'src/services/statistics.service';
 import { JwtAuthGuard } from 'src/strategy/jwt-auth';

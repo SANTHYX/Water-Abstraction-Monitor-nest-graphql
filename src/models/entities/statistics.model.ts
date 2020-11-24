@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { IsDate, IsNotEmpty, IsNumber } from 'class-validator';
 import {
   Column,
@@ -10,6 +11,7 @@ import {
 @Entity()
 export class Statistics {
   @PrimaryGeneratedColumn('uuid')
+  @Exclude()
   id: string;
 
   @Column('float')
@@ -19,6 +21,7 @@ export class Statistics {
 
   @CreateDateColumn()
   @IsDate()
+  @Exclude()
   createdAt: Date;
 
   @UpdateDateColumn()
