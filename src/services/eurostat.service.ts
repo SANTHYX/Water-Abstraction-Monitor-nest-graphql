@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { GetEurostatSubtraction } from 'src/dto/eurostat/get.eurostat.subtraction';
+import { GetCurrentEurostatData } from 'src/dto/eurostat/get.current.eurostat.data';
+import { GetAnyEurostatData } from 'src/dto/eurostat/get.eurostat.subtraction';
 import { EurostatResponse } from 'src/models/responses/eurostat.response.model';
 import { fetchData } from 'src/plugins/axios';
 import { IEurostatService } from './interfaces/eurostat.service.interface';
@@ -7,7 +8,7 @@ import { IEurostatService } from './interfaces/eurostat.service.interface';
 @Injectable()
 export class EurostatService implements IEurostatService {
   async FetchCurrentEurostatData(
-    getDTO: GetEurostatSubtraction,
+    getDTO: GetCurrentEurostatData,
   ): Promise<EurostatResponse> {
     try {
       const data = await fetchData(2018, getDTO.nationality);
@@ -23,7 +24,7 @@ export class EurostatService implements IEurostatService {
   }
 
   async FetchAnyEurostatData(
-    getDTO: GetEurostatSubtraction,
+    getDTO: GetAnyEurostatData,
   ): Promise<EurostatResponse> {
     try {
       const data = await fetchData(getDTO.year, getDTO.nationality);

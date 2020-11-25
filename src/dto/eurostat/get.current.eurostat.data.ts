@@ -1,9 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GetAnyEurostatData {
-  @ApiProperty()
-  year: number;
-
+export class GetCurrentEurostatData {
   @ApiProperty()
   nationality: string;
 }

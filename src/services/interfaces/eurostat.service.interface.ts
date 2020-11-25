@@ -1,11 +1,10 @@
-import { GetEurostatSubtraction } from 'src/dto/eurostat/get.eurostat.subtraction';
+import { GetCurrentEurostatData } from 'src/dto/eurostat/get.current.eurostat.data';
+import { GetAnyEurostatData } from 'src/dto/eurostat/get.eurostat.subtraction';
 import { EurostatResponse } from 'src/models/responses/eurostat.response.model';
 
 export interface IEurostatService {
   FetchCurrentEurostatData(
-    getDTO: GetEurostatSubtraction,
+    getDTO: GetCurrentEurostatData,
   ): Promise<EurostatResponse>;
-  FetchAnyEurostatData(
-    getDTO: GetEurostatSubtraction,
-  ): Promise<EurostatResponse>;
+  FetchAnyEurostatData(getDTO: GetAnyEurostatData): Promise<EurostatResponse>;
 }

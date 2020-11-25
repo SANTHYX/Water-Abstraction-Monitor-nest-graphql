@@ -18,20 +18,37 @@ import { UpdateUserDTO } from 'src/dto/users/update.user.dto';
 import { User } from 'src/models/entities/user.model';
 import { UsersService } from 'src/services/users.service';
 import { JwtAuthGuard } from 'src/strategy/jwt-auth';
-import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConflictResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiParam,
+  ApiQuery,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiParam({ name: 'login' })
   @ApiBearerAuth()
+  @ApiNotFoundResponse({
+    status: 404,
+    description: 'Seems like user with username ${login} dont exist`',
+  })
+  @ApiOkResponse({ status: 200 })
+  @ApiUnauthorizedResponse({ status: 401, description: 'Unatuhorized' })
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthGuard)
   @Get(':login')
   async GetUserAsync(@Param('login') login: string): Promise<User> {
     return await this.userService.FindUserAsync(login);
   }
 
+  @ApiQuery({ type: PaginationDTO })
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -40,6 +57,10 @@ export class UsersController {
     return await this.userService.BrowseAsync(pagination);
   }
 
+  @ApiConflictResponse({
+    status: 409,
+    description: 'Seems like user with username ${userDTO.login} already exist',
+  })
   @ApiBody({ type: CreateUserDTO })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -48,6 +69,10 @@ export class UsersController {
     await this.userService.RegisterAsync(user);
   }
 
+  @ApiNotFoundResponse({
+    status: 404,
+    description: 'Seems like user with username ${userDTO.login} dont exist',
+  })
   @ApiBody({ type: UpdateUserDTO })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)

@@ -18,6 +18,7 @@ async function bootstrap() {
     .setDescription('API for application helping with water saving')
     .setVersion('1.0')
     .addTag('WA')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

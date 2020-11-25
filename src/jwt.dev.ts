@@ -5,5 +5,5 @@ dotenv.config();
 
 export const JwtSetup: JwtModuleOptions = {
   secret: process.env.JWT_SECRET,
-  signOptions: { expiresIn: '3000s' },
+  signOptions: { expiresIn: '300s' },
 };

@@ -20,7 +20,7 @@ export class UsersService implements IUserService {
     if (await this.usersRepository.isExist(login)) {
       return await this.usersRepository.findOneOrFail(
         { login: login },
-        { relations: ['statistics'] },
+        { relations: ['statistics', 'subtractions'] },
       );
     } else
       throw new NotFoundException(
