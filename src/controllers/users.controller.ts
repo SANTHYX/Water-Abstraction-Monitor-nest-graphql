@@ -62,8 +62,6 @@ export class UsersController {
     description: 'Seems like user with username ${userDTO.login} already exist',
   })
   @ApiBody({ type: CreateUserDTO })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Post()
   async RegisterUserAsync(@Body() user: CreateUserDTO): Promise<void> {
     await this.userService.RegisterAsync(user);

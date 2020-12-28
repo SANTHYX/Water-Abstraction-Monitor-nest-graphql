@@ -20,6 +20,7 @@ export class AuthService implements IAuthService {
       const authResponse: AuthResponse = {
         token: await this.jwtService.signAsync(payload),
         createdAt: new Date(),
+        username: userDTO.login,
       };
       return authResponse;
     } else throw new UnauthorizedException(`Invalid Credentials`);
